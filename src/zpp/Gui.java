@@ -33,12 +33,18 @@ public class Gui {
     private static int port;
     private boolean test;
 
+    /**
+     * konstruktor inicalizujący elementy gui
+     */
     public Gui() {
         this.buton = new JButton("Połącz");
         serverName = new JTextField(10);
         portNr = new JTextField(4);
     }
 
+    /**
+     * metoda wyświetla okno logowania na wybrany serwer
+     */
     void initGUI() {
         ramka = new JFrame("Zdalna przeglądarka plików");
         ramka.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -80,6 +86,13 @@ public class Gui {
         ramka.setVisible(true);
     }
 
+    /*
+     * metoda wykonuje akcję po kliknięciu na przycisk połącz lub
+     * enter w polu nazwa serwera lub numer portu
+     * sprawdzenie poprawności wpisanej nazwy w polu tekstowym 
+     * oraz numeru portu, jeśli w trakcie terstu nei znajdzie błąd przechodzi 
+     * do metody 
+     */
     public void akcjaPolacz(ActionEvent e) {
         test = true;
         if (serverName.getText().equals("") || portNr.getText().equals("")) {
@@ -124,7 +137,7 @@ public class Gui {
     }
 
     /**
-     * metoda pokazuje okienko z plikami na serwerze
+     * metoda inicjuje okienko z plikami na serwerze
      */
     public void aGuiOdServ() {
         EventQueue.invokeLater(new Runnable() {
