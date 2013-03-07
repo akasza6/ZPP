@@ -23,8 +23,8 @@ import javax.swing.SwingUtilities;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-/**
- *
+/*
+ * Klasa odpowiada za wyświetlanie elementów przesłanych przez serwer
  * @author akasza
  */
 public class GuiOdServ extends JFrame implements ListSelectionListener {
@@ -40,12 +40,18 @@ public class GuiOdServ extends JFrame implements ListSelectionListener {
     private JFileChooser chooser;
     private static int liczbaOkien = 1;
 
+    /*
+     * Konsturktor tworzy obiekt nowego klienta i inicjuje metodę gui
+     */
     public GuiOdServ() throws UnknownHostException, IOException {
         klient = new Klient();
         klient.listujKatalog();
         gui();
     }
 
+    /*
+     * Metoda wyświetla okno z danymi przesłanymi przez serwer
+     */
     private void gui() {
         this.setTitle("Sesja na: " + Gui.getServer() + " port: " + Gui.getPort());
         this.setSize(600, 400);
@@ -73,7 +79,7 @@ public class GuiOdServ extends JFrame implements ListSelectionListener {
                 try {
                     apPobierz();
                 } catch (IOException ex) {
-                    ex.printStackTrace();
+                    System.err.println(ex.getSuppressed());
                 }
             }
         });
@@ -85,7 +91,7 @@ public class GuiOdServ extends JFrame implements ListSelectionListener {
                 try {
                     apZakoncz();
                 } catch (IOException ex) {
-                    ex.printStackTrace();
+                    System.err.println("Błąd wejścia/wyjścia:\n"+ex.getSuppressed());
                 }
             }
         });
@@ -105,7 +111,7 @@ public class GuiOdServ extends JFrame implements ListSelectionListener {
                 try {
                     apZamknij();
                 } catch (IOException ex) {
-                    ex.printStackTrace();
+                    System.err.println("Błąd wejścia wyjścia:\n"+ex.getSuppressed());
                 }
             }
         });
@@ -124,7 +130,7 @@ public class GuiOdServ extends JFrame implements ListSelectionListener {
         this.add(new JScrollPane(txtarea), BorderLayout.PAGE_END);
     }
 
-    /**
+    /*
      * metoda zapisuje do listy poszczególne nazwy
      * plików znajdujących się na serwerze
      */
@@ -135,7 +141,7 @@ public class GuiOdServ extends JFrame implements ListSelectionListener {
         }
     }
 
-    /**
+    /*
      * obsługa przycisku pobierz/otworz
      * jesli przycisk = pobierz zostaje pokazane okno dialogowe które umożliwia wybór lokalizjacji pliku
      * jesli przycisk = otworz do serwera wysyłana jest prośba o wylistowanie "podkatalogu"
@@ -168,8 +174,8 @@ public class GuiOdServ extends JFrame implements ListSelectionListener {
 
     }
 
-    /**
-     *
+    /*
+     * Metoda wyświetla okno dialogowe oraz kontoroluje liczbę aktywnych okien
      * @throws IOException
      */
     private void apZakoncz() throws IOException {
@@ -194,7 +200,7 @@ public class GuiOdServ extends JFrame implements ListSelectionListener {
         }
     }
 
-    /**
+    /*
      * akcja umozliwia wlaczenie nowej sesji
      */
     private void apNowaSesja() {
@@ -208,7 +214,7 @@ public class GuiOdServ extends JFrame implements ListSelectionListener {
         });
     }
 
-    /**
+    /*
      * akcja zamyka aplikację lub usuwa sesje w zależności od ilości sesji
      * - jesli była tylko jedna sesja w programie zamuka go
      * - jesli ilosc sesji jest >1 to zamyka aktualna sesję
@@ -228,7 +234,7 @@ public class GuiOdServ extends JFrame implements ListSelectionListener {
         }
     }
 
-    /**
+    /*
      * metoda sprawdza jaki element listy jest zaznaczony,
      * zmienia napisa na przycisku otworz/pobierz
      * @param e

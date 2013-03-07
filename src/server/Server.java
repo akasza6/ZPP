@@ -11,7 +11,9 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 /**
- *
+ * Klasa tworzy gniazdo na porcie 8080 oraz lokalnym adresie.
+ * Dla każdego nowego klienta zostaje utworzony nowy obiekt typu ServerHandler,
+ * a następnie przy jego pomocy uruchomiony nowy wątek.
  * @author akasza
  */
 public class Server {
@@ -30,7 +32,7 @@ public class Server {
 
 		}
 	  }catch(IOException e){
-		e.printStackTrace();
+		System.err.println("Błąd we/wy\n"+e.getSuppressed());
 	  }
     }
 }

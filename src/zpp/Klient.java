@@ -22,6 +22,10 @@ public class Klient {
     private String[] dane;
     private Socket gniazdo;
 
+    /**
+     * Konstuktor inicjuje gniazdo
+     * @throws IOException 
+     */
     public Klient() throws IOException {
         System.out.println("klient sie polączył z " + Gui.getServer()
                 + " na porcie " + Gui.getPort());
@@ -31,6 +35,11 @@ public class Klient {
         }
     }
 
+    /**
+     * Metoda czyta z gniazda dane i zapisuje je do pola dane.
+     * dane[i] to kolejne nazwy plików na serwerze.
+     * @throws IOException 
+     */
     void listujKatalog() throws IOException {
 
         DataInputStream in = new DataInputStream(gniazdo.getInputStream());
@@ -45,6 +54,10 @@ public class Klient {
         }
     }
 
+    /**
+     * Metoda pobiera pole prywatne
+     * @return tablica string z listą plików przesłanych przez serwer 
+     */
     public String[] getDane() {
         return dane;
     }
@@ -61,6 +74,11 @@ public class Klient {
         out.flush();
     }
 
+    /**
+     * Metoda odczytuje dane z strumienia i zapisuje je na dysk
+     * @param nazwa określa nazwę pliku który jest zapisywany na dysku lokalnym
+     * @throws IOException 
+     */
     public void odbierz(String nazwa) throws IOException {
 
         DataInputStream is = new DataInputStream(gniazdo.getInputStream());
@@ -102,6 +120,9 @@ public class Klient {
         this.wyczyscStrumien();
     }
 
+    /**
+     * Metoda pomija nieporządane bity ze strumienia
+     */
     public void wyczyscStrumien() {
         try {
             InputStream is = gniazdo.getInputStream();
@@ -111,10 +132,14 @@ public class Klient {
                 is.skip(i);
             }
         } catch (IOException ex) {
-            ex.printStackTrace();
+            System.err.println("Błąd wejścia/wyjścia:\n"+ex.getSuppressed());
         }
     }
 
+    /**
+     * Metoda zamyka gniazdo
+     * @throws IOException 
+     */
     public void zamknijGniazdo() throws IOException {
         gniazdo.close();
     }

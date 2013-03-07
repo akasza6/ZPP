@@ -27,18 +27,26 @@ public class ServerHandler implements Runnable {
     String[] dane;
     int dl;
 
+    /**
+     * Przypisuje aktualny katalog jako domyślny.
+     * @param s przekazuje parametry potrzebne do utworzenia ganiazda
+     */
     public ServerHandler(Socket s) {
-
         this.s = s;
         this.katalog = ".";
     }
 
+    /**
+     * Metoda tworzy strumienie i przy ich pomocy wysyła nazwy plików 
+     * znajdujące się w katalogu określonym polem 'katalog' do klienta.
+     * Następnie metoda oczekuje na odpowiedź klienta.
+     */
     public void run() {
         try {
             os = new DataOutputStream(s.getOutputStream());
             is = new DataInputStream(s.getInputStream());
         } catch (IOException ex) {
-            ex.printStackTrace();
+            System.err.println("Błąd we/wy\n"+ex.getSuppressed());
         }
 
         while (true) {
@@ -72,7 +80,7 @@ public class ServerHandler implements Runnable {
                 //ex.printStackTrace();
                 break;
             } catch (IOException ex) {
-                ex.printStackTrace();
+                System.err.println("Błąd we/wy\n"+ex.getSuppressed());
             }
         }
         try {
@@ -81,7 +89,7 @@ public class ServerHandler implements Runnable {
             os.close();
             s.close();
         } catch (IOException ex) {
-            ex.printStackTrace();
+            System.err.println("Błąd we/wy\n"+ex.getSuppressed());
         }
     }
 
@@ -165,7 +173,7 @@ public class ServerHandler implements Runnable {
 
             }
         } catch (IOException ex) {
-            ex.printStackTrace();
+            System.err.println("Błąd we/wy:\n"+ex.getSuppressed());
         }
     }
 }

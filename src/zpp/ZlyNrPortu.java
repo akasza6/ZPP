@@ -11,6 +11,9 @@ package zpp;
  */
 public class ZlyNrPortu extends Exception{
 
+    /**
+     * Konstruktor przy pomocy super() wykonuje te same czynności co klasa nadrzędna
+     */
     public ZlyNrPortu() {
         super();
     }

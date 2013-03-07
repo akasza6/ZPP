@@ -90,8 +90,8 @@ public class Gui {
      * metoda wykonuje akcję po kliknięciu na przycisk połącz lub
      * enter w polu nazwa serwera lub numer portu
      * sprawdzenie poprawności wpisanej nazwy w polu tekstowym 
-     * oraz numeru portu, jeśli w trakcie terstu nei znajdzie błąd przechodzi 
-     * do metody 
+     * oraz numeru portu, jeśli w trakcie terstu nie znajdzie błąd przechodzi 
+     * do metody iGuiOdServ
      */
     public void akcjaPolacz(ActionEvent e) {
         test = true;
@@ -127,7 +127,7 @@ public class Gui {
         }
     }
 
-    /**
+    /*
      * Metoda otwiera okno błędu spowodowane złym numerem portu
      */
     public void error() {
@@ -146,18 +146,24 @@ public class Gui {
                 try {
                     new GuiOdServ().setVisible(true);
                 } catch (UnknownHostException ex) {
-                    ex.printStackTrace();
+                    System.err.println("Błąd hosta: "+ex.getStackTrace().toString());
                 } catch (IOException ex) {
-                    ex.printStackTrace();
+                    System.err.println("Błąd wejścia wyjścia: "+ex.getStackTrace().toString());
                 }
             }
         });
     }
 
+    /*
+     * Metoda pobiera i zwraca pole portu
+     */
     public static int getPort() {
         return port;
     }
 
+    /*
+     * Metoda pobiera i zwraca nazwę lub adres hosta
+     */
     public static InetAddress getServer() {
         return server;
     }

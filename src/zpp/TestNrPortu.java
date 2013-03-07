@@ -11,12 +11,21 @@ package zpp;
  */
 public class TestNrPortu {
 
+    /**
+     * 
+     * @param i numer portu
+     * @return prawda gdy liczba spełnia założenia przedziału (0-6553)
+     * @throws ZlyNrPortu 
+     */
     public boolean spr(int i) throws ZlyNrPortu{
         if(i<0){
             throw new ZlyNrPortu();
-        } else if(i>65535)
+        } else if(i>65535) {
             throw new ZlyNrPortu();
-        else return true;
+        }
+        else {
+            return true;
+        }
     }
 
 }
