@@ -7,6 +7,10 @@ package zpp;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.net.UnknownHostException;
 import javax.swing.DefaultListModel;
@@ -74,7 +78,6 @@ public class GuiOdServ extends JFrame implements ListSelectionListener {
         pobierz = new JButton("Pobierz");
         pobierz.setEnabled(false);
         pobierz.addActionListener(new ActionListener() {
-
             public void actionPerformed(ActionEvent e) {
                 try {
                     apPobierz();
@@ -84,21 +87,45 @@ public class GuiOdServ extends JFrame implements ListSelectionListener {
             }
         });
 
+        list.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent ke) {
+                try {
+                    if (ke.getKeyCode() == KeyEvent.VK_ENTER) {
+                        apPobierz();
+                    }
+                } catch (IOException ex) {
+                    System.err.println(ex.getSuppressed());
+                }
+            }
+        });
+
+        list.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent me) {
+                try {
+                    if (me.getClickCount() == 2) {
+                        apPobierz();
+                    }
+                } catch (IOException ex) {
+                    System.err.println(ex.getSuppressed());
+                }
+            }
+        });
+
         zakoncz = new JButton("Zakończ sesję");
         zakoncz.addActionListener(new ActionListener() {
-
             public void actionPerformed(ActionEvent e) {
                 try {
                     apZakoncz();
                 } catch (IOException ex) {
-                    System.err.println("Błąd wejścia/wyjścia:\n"+ex.getSuppressed());
+                    System.err.println("Błąd wejścia/wyjścia:\n" + ex.getSuppressed());
                 }
             }
         });
 
         nowaSesja = new JButton("Nowa sesja");
         nowaSesja.addActionListener(new ActionListener() {
-
             public void actionPerformed(ActionEvent e) {
                 apNowaSesja();
             }
@@ -106,12 +133,11 @@ public class GuiOdServ extends JFrame implements ListSelectionListener {
 
         zamknij = new JButton("Zamknij");
         zamknij.addActionListener(new ActionListener() {
-
             public void actionPerformed(ActionEvent e) {
                 try {
                     apZamknij();
                 } catch (IOException ex) {
-                    System.err.println("Błąd wejścia wyjścia:\n"+ex.getSuppressed());
+                    System.err.println("Błąd wejścia wyjścia:\n" + ex.getSuppressed());
                 }
             }
         });
@@ -187,7 +213,6 @@ public class GuiOdServ extends JFrame implements ListSelectionListener {
             this.setVisible(false);
             if (liczbaOkien == 1) {
                 SwingUtilities.invokeLater(new Runnable() {
-
                     public void run() {
                         Gui gui = new Gui();
                         gui.initGUI();
@@ -206,7 +231,6 @@ public class GuiOdServ extends JFrame implements ListSelectionListener {
     private void apNowaSesja() {
         liczbaOkien++;
         SwingUtilities.invokeLater(new Runnable() {
-
             public void run() {
                 Gui gui = new Gui();
                 gui.initGUI();
